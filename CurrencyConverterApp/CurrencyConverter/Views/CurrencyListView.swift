@@ -14,10 +14,14 @@ struct CurrencyListView: View {
    @Environment(\.presentationMode) var presentationMode
     
     private var disposables = Set<AnyCancellable>()
+    var callback: ((Currency?) -> Void)?
+
+    init(dismissed callback: @escaping (Currency?) -> Void) {
+        self.callback = callback
+    }
     
     var body: some View {
-        
-        
+
         NavigationView {
             List {
                 searchField
@@ -30,6 +34,9 @@ struct CurrencyListView: View {
             }
             .listStyle(GroupedListStyle())
             .navigationBarTitle("Currencies")
+        }.onDisappear {
+            UIApplication.shared.endEditing()
+            self.callback!(viewModel.selectedCurrency)
         }
     }
     
@@ -44,12 +51,13 @@ struct CurrencyListView: View {
 
     var currencyListSection: some View {
         Section {
-            ForEach(viewModel.currencies, id: \.self) { currency in
-                CurrencyListCell(currency:currency, selectedCurrency: $viewModel.selectedCurrency)
+            ForEach(viewModel.currencies, id: \.self) { currency in                
+                CurrencyListCell.init(currency: currency) { currency in
+                    viewModel.selectedCurrency = currency
+                    presentationMode.wrappedValue.dismiss()
+                }
+                
             }
-        }.onTapGesture {
-            print("selectedCurrency-----:\($viewModel.selectedCurrency)")
-            presentationMode.wrappedValue.dismiss()
         }
     }
     

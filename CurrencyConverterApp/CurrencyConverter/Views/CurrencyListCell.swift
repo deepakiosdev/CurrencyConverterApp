@@ -11,7 +11,12 @@ import Combine
 struct CurrencyListCell: View {
     
     let currency: Currency
-    @Binding var selectedCurrency: Currency?
+    var callback: ((Currency?) -> Void)?
+   
+    init(currency: Currency, callback: @escaping (Currency?) -> Void) {
+        self.currency = currency
+        self.callback = callback
+    }
     
     var body: some View {
         HStack {
@@ -21,7 +26,7 @@ struct CurrencyListCell: View {
             Spacer()
             Text("\(currency.name ?? "")")
         } .onTapGesture {
-            self.selectedCurrency = self.currency
+            self.callback!(currency)
         }
     }
 }

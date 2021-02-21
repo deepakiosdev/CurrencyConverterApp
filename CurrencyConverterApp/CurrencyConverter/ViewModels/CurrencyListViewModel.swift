@@ -26,14 +26,6 @@ class CurrencyListViewModel: ObservableObject, Identifiable {
             .debounce(for: .seconds(0.5), scheduler: DispatchQueue.global(qos: .userInitiated))
             .sink(receiveValue: searchCurrency(for:))
             .store(in: &disposables)
-        
-        $selectedCurrency
-            .sink(receiveValue: { value in
-                print("Selected Currency:\(String(describing: value))")
-            }
-            )
-            .store(in: &disposables)
-        
     }
     
     private func searchCurrency(for text: String) {

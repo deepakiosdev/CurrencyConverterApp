@@ -17,6 +17,8 @@ class CurrencyConverterViewModel: ObservableObject, ExchangeRateFetchable {
 
     @Published var selectedCurrencyExchangeRate = ExchangeRate()
     @Published var convertedRates = [CurrencyConverter]()
+    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+
     var exchangeRates = [ExchangeRate]()
     
     private var disposables = Set<AnyCancellable>()
@@ -27,6 +29,7 @@ class CurrencyConverterViewModel: ObservableObject, ExchangeRateFetchable {
     
     private func makeApicalls() {
         fetchCurrencies()
+        fetchExchangeRatesRepeatatily()
         setupBinding()
     }
     
@@ -68,14 +71,21 @@ class CurrencyConverterViewModel: ObservableObject, ExchangeRateFetchable {
                     break
                 }
             },
-            receiveValue: { [weak self] in
-                self?.fetchExchangeRates()
+            receiveValue: { _ in
             }
         )
         .store(in: &disposables)
         
     }
     
+    
+    private func fetchExchangeRatesRepeatatily() {
+        fetchExchangeRates()
+        //Call exchange rate api on every 30 minute
+        Timer.scheduledTimer(withTimeInterval: 30 * 60, repeats: true) { [weak self] timer in
+            self?.fetchExchangeRates()
+        }
+    }
     
     private func fetchExchangeRates() {
         

@@ -20,10 +20,12 @@ struct CurrencyConverterView: View {
             }
             .listStyle(GroupedListStyle())
             .navigationBarTitle("Currency Converter")
+        }.onDisappear {
+            UIApplication.shared.endEditing()
         }
     }
-    
 }
+    
 
 private extension CurrencyConverterView {
     var enterAmountSection: some View {
@@ -40,7 +42,9 @@ private extension CurrencyConverterView {
     
     var selectCurrencySection: some View {
         Section {
-            NavigationLink(destination: CurrencyListView()) {
+            NavigationLink(destination: CurrencyListView.init(dismissed: { currency in
+                viewModel.selectedCurrency = currency
+            })) {
                 HStack(alignment: .center) {
                     
                     Text("Select a Currency")
