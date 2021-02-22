@@ -125,10 +125,11 @@ class CurrencyConverterViewModel: ObservableObject, ExchangeRateFetchable {
     private func reloadData()  {
         var results = [CurrencyConverter]()
         for exchangeRate in exchangeRates {
-            let totalAmount = (Double(amount) ?? 0.0) * (exchangeRate.rate / selectedCurrencyExchangeRate.rate)
-            let convertedAmount = String(format: "%.2f", totalAmount) + " \(exchangeRate.currencyName ?? "")"
+            let conversionRate = exchangeRate.rate / selectedCurrencyExchangeRate.rate
+            let totalAmount = (Double(amount) ?? 0.0) * conversionRate
+            let convertedAmount = String(format: "%.3f", totalAmount) + " \(exchangeRate.currencyName ?? "")"
             
-            let currencyValue = "1 " + "\(selectedCurrencyExchangeRate.currencyName ?? "")" + " = " + String(format: "%.2f", exchangeRate.rate) + " \(exchangeRate.currencyName ?? "")"
+            let currencyValue = "1 " + "\(selectedCurrencyExchangeRate.currencyName ?? "")" + " = " + String(format: "%.3f", conversionRate) + " \(exchangeRate.currencyName ?? "")"
             
             let currencyConversion = CurrencyConverter.init(convertedAmount: convertedAmount, currencyValue: currencyValue)
             
