@@ -55,37 +55,6 @@ extension APIRequestBuilder {
 }
 
 //Create and configure URLRequest
-/*extension APIRequestBuilder {
-    
-    func urlComponents() -> URLComponents {
-        
-        /* var urlRequest = URLRequest(url: baseURL.appendingPathComponent(path))
-         
-         // HTTP Method
-         urlRequest.httpMethod = httpMethod.rawValue
-         
-         // Parameters
-         if let parameters = requestParameters {
-         do {
-         urlRequest.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [])
-         } catch {
-         throw CCError.network(description: error.localizedDescription)
-         }
-         }*/
-        
-        var components = URLComponents()
-        components.scheme = scheme
-        //components.m = httpMethod.rawValue
-        components.host = host
-        components.path = path
-        components.queryItems = requestParameters
-        
-        return components
-    }
-    
-}
-*/
-
 
 extension APIRequestBuilder {
     
