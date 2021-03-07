@@ -3,4 +3,70 @@
    uuid = "9D56712E-BE94-4DF8-9DDD-3C22F1F166ED"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9E9D360C-5BFC-497E-9F04-36953E0CA79A"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CurrencyConverterApp/CurrencyConverter/ViewModels/CurrencyConverterViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "119"
+            endingLineNumber = "119"
+            landmarkName = "fetchData()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C8951499-3559-478B-990F-C9219AAA1FA0"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CurrencyConverterApp/CurrencyConverter/ViewModels/CurrencyListViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "33"
+            endingLineNumber = "33"
+            landmarkName = "searchCurrency(for:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "C8951499-3559-478B-990F-C9219AAA1FA0 - aebbf52ebba3a61b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "CurrencyConverterApp.CurrencyListViewModel.(searchCurrency in _8684F91D668CCAA19935D3E85A70B4A5)(for: Swift.String) -&gt; ()"
+                  moduleName = "CurrencyConverterApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dipak/Deepak/TabSquare/DemoProjects/CurrencyConverterApp/CurrencyConverterApp/CurrencyConverter/ViewModels/CurrencyListViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "33"
+                  endingLineNumber = "33"
+                  offsetFromSymbolStart = "369">
+               </Location>
+               <Location
+                  uuid = "C8951499-3559-478B-990F-C9219AAA1FA0 - 814909cfb22a5824"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; () in CurrencyConverterApp.CurrencyListViewModel.(searchCurrency in _8684F91D668CCAA19935D3E85A70B4A5)(for: Swift.String) -&gt; ()"
+                  moduleName = "CurrencyConverterApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dipak/Deepak/TabSquare/DemoProjects/CurrencyConverterApp/CurrencyConverterApp/CurrencyConverter/ViewModels/CurrencyListViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "33"
+                  endingLineNumber = "33"
+                  offsetFromSymbolStart = "80">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

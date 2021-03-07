@@ -10,11 +10,12 @@ import CoreData
 import SwiftUI
 
 struct PersistentManager {
-   
+    
     static let shared = PersistentManager()
-        
+    
     let persistentContainer: NSPersistentContainer
-
+    var childContext: NSManagedObjectContext!
+    
     // MARK: - Core Data stack
     private init() {
         /*
@@ -22,13 +23,15 @@ struct PersistentManager {
          creates and returns a container, having loaded the store for the
          application to it. This property is optional since there are legitimate
          error conditions that could cause the creation of the store to fail.
-        */
+         */
         persistentContainer = NSPersistentContainer(name: "CurrencyConverterApp")
+        childContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+        childContext.parent = persistentContainer.viewContext
         persistentContainer.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
                 // Replace this implementation with code to handle the error appropriately.
                 // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                 
+                
                 /*
                  Typical reasons for an error here include:
                  * The parent directory does not exist, cannot be created, or disallows writing.
@@ -43,21 +46,30 @@ struct PersistentManager {
     }
     
     // MARK: - Core Data Saving support
-
+    
     func saveContext () {
-        let context = persistentContainer.newBackgroundContext()
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+        
+        childContext.perform {
+            if ((childContext?.hasChanges) != nil) {
+                do {
+                    try childContext?.save()
+                    
+                    do {
+                        try persistentContainer.viewContext.save()
+                    } catch {
+                        let nserror = error as NSError
+                        fatalError("Unresolved error during data saving: \(nserror), \(nserror.userInfo)")
+                    }
+                } catch {
+                    // Replace this implementation with code to handle the error appropriately.
+                    // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                    let nserror = error as NSError
+                    fatalError("Unresolved error: \(nserror), \(nserror.userInfo)")
+                }
             }
         }
     }
-
+    
 }
 
 
@@ -68,7 +80,7 @@ extension PersistentManager {
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
         
         do {
-            try persistentContainer.viewContext.execute(deleteRequest)
+            try childContext.execute(deleteRequest)
         } catch let error as NSError {
             print("Core data delete error:\(error)")
         }
@@ -80,7 +92,7 @@ extension PersistentManager {
             deleteAllObjects("Currency")
             
             for (symbol, name) in currencies {
-                let currency = Currency(context: persistentContainer.viewContext)
+                let currency = Currency(context: childContext)
                 currency.symbol = symbol
                 currency.name = name
             }
@@ -95,8 +107,8 @@ extension PersistentManager {
             deleteAllObjects("ExchangeRate")
             
             for (currencyName, rate) in exchangeRates {
-                let exchangeRate = ExchangeRate(context: persistentContainer.viewContext)
-                
+                let exchangeRate = ExchangeRate(context: childContext)
+
                 //Remove USD prefix from currency name
                 let prefix = "USD"
                 var currency = currencyName

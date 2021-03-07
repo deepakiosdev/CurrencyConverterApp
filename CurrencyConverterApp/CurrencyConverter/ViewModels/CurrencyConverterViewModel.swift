@@ -107,7 +107,9 @@ class CurrencyConverterViewModel: ObservableObject, ExchangeRateFetchable {
                 }
             },
             receiveValue: { [weak self] currencies in
-                self?.fetchData()
+                DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 1) {
+                    self?.fetchData()
+                }
             })
         .store(in: &disposables)
     }

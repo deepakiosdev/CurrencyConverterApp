@@ -62,7 +62,6 @@ extension APIRequestBuilder {
         
         var components = URLComponents()
         components.scheme = scheme
-        //components.m = httpMethod.rawValue
         components.host = host
         components.path = path
         components.queryItems = requestParameters
